@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Framework Karate</title>
+    <style>
+        :root {
+            --primary-color: #2C3E50; /* Azul oscuro profesional */
+            --accent-color: #E67E22; /* Naranja vibrante para destacar */
+            --secondary-color: #3498DB; /* Azul claro para subtítulos */
+            --bg-light: #ECF0F1;
+            --bg-dark: #2c3e50;
+            --text-light: #ffffff;
+            --text-dark: #333333;
+            --code-bg: #1e1e1e;
+            --folder-color: #f7d057; /* Amarillo para carpetas */
+            --file-color: #79d2a6; /* Verde claro para archivos de prueba */
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        h1, h2, h3 {
+            margin: 0;
+        }
+
+        /* --- Estilos generales (mantener) --- */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--text-light);
+            padding: 4rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .header h1 { font-size: 3.5rem; margin-bottom: 1rem; letter-spacing: 2px; }
+        .header .tagline { font-size: 1.5rem; font-weight: 300; opacity: 0.9; }
+        .karate-chop { display: inline-block; color: var(--accent-color); transform: rotate(-15deg); font-weight: bold; font-style: italic; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+        .section-title { text-align: center; font-size: 2.2rem; color: var(--primary-color); margin: 3rem 0 1.5rem 0; position: relative; }
+        .section-title::after { content: ''; display: block; width: 60px; height: 4px; background: var(--accent-color); margin: 10px auto 0; }
+        .info-card { background: #fff; padding: 2rem; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-left: 5px solid var(--accent-color); transition: transform 0.3s ease; }
+        .info-card:hover { transform: translateY(-5px); }
+        .info-card h3 { color: var(--primary-color); margin-bottom: 1rem; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; }
+        .comparison { display: flex; justify-content: space-around; margin-top: 2rem; flex-wrap: wrap; }
+        .comp-box { flex: 1; min-width: 300px; margin: 1rem; padding: 2rem; border-radius: 10px; text-align: center; }
+        .comp-old { background-color: #e0e0e0; border: 2px dashed #999; }
+        .comp-new { background-color: #d5f5e3; border: 2px solid #2ecc71; position: relative; }
+        .comp-new::before { content: '✅ La forma Karate'; position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #2ecc71; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .feature-box { background: var(--primary-color); color: var(--text-light); padding: 1.5rem; border-radius: 10px; text-align: center; }
+        .feature-box h3 { margin-bottom: 0.5rem; color: var(--accent-color); }
+        .feature-icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+        .code-section { background-color: var(--code-bg); color: #d4d4d4; padding: 2rem; border-radius: 10px; font-family: 'Courier New', Courier, monospace; overflow-x: auto; border-left: 5px solid var(--accent-color); }
+        .code-comment { color: #6a9955; }
+        .code-keyword { color: #c586c0; font-weight: bold; }
+        .code-string { color: #ce9178; }
+        .code-variable { color: #9cdcfe; }
+        .footer { background: var(--primary-color); color: var(--text-light); text-align: center; padding: 2rem; margin-top: 4rem; }
+        .footer a { color: var(--accent-color); text-decoration: none; }
+        @media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } .header h1 { font-size: 2.5rem; } }
+        /* --- Nuevo Estilo: Estructura de Proyecto --- */
+        .project-structure {
+            background: #fff;
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            font-family: 'Courier New', Courier, monospace;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+        }
+
+        .folder-item {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        .file-item {
+            color: var(--text-dark);
+        }
+        .description-text {
+            color: #666;
+            font-weight: normal;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        .icon-folder::before {
+            content: '📂';
+            color: var(--folder-color);
+            margin-right: 8px;
+        }
+        .icon-file::before {
+            content: '📄';
+            color: var(--file-color);
+            margin-right: 8px;
+        }
+        .icon-config::before {
+            content: '⚙️';
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <h1>Karate <span class="karate-chop">Framework</span></h1>
+        <p class="tagline">Automatización de Pruebas Unificada. Simple. Potente.</p>
+        <p style="margin-top: 1rem; font-size: 0.9rem;">API Testing | UI Testing | Mocks | Performance</p>
+    </header>
+
+    <div class="container">
+
+        <h2 class="section-title">¿Qué es Karate?</h2>
+        <div class="grid-2">
+            <div class="info-card">
+                <h3>🥋 La Definición Corta</h3>
+                <p>Karate es una herramienta de automatización de pruebas de código abierto que combina la automatización de API, mocks, pruebas de rendimiento e incluso automatización de UI (navegador) en un <strong>único framework unificado</strong>.</p>
+            </div>
+            <div class="info-card" style="background: var(--primary-color); color: white; border-left-color: white;">
+                <h3 style="color: var(--accent-color)">🎯 La Filosofía Clave</h3>
+                <p>Utiliza la sintaxis <strong>Gherkin</strong> (Given-When-Then) de BDD, pero <strong>elimina la necesidad de "step definitions"</strong> (definiciones de pasos) en Java o Python. Los pasos en Karate <em>son</em> el código.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">Estructura del Proyecto Karate (Maven)</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">Karate se basa en la estructura estándar de Maven para organizar los archivos de prueba.</p>
+
+        <div class="project-structure">
+            <div class="folder-item">📦 mi-proyecto-karate/</div>
+            <div style="padding-left: 20px;">
+                <div class="icon-config">pom.xml <span class="description-text">Define la dependencia de Karate y las configuraciones de Maven.</span></div>
+                <div class="folder-item icon-folder">src/</div>
+                <div style="padding-left: 20px;">
+                    <div class="folder-item icon-folder">test/</div>
+                    <div style="padding-left: 20px;">
+                        <div class="folder-item icon-folder">java/</div>
+                        <div style="padding-left: 20px;">
+                            <div class="folder-item icon-folder">com/mi/paquete/</div>
+                            <div style="padding-left: 20px;">
+                                <div class="icon-file">users.feature <span class="description-text">Archivo Gherkin. Contiene la lógica de prueba (Given/When/Then).</span></div>
+                                <div class="icon-file">TestRunner.java <span class="description-text">Archivo Java. Únicamente para ejecutar las pruebas con JUnit.</span></div>
+                                <div class="icon-file">karate-config.js <span class="description-text">(Opcional) Archivo de configuración global (URLs base, variables de entorno).</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="folder-item icon-folder" style="margin-top: 10px;">target/ <span class="description-text">Carpera generada: ¡Contiene los reportes HTML!</span></div>
+        </div>
+        <h2 class="section-title">El "Golpe de Karate" a la Complejidad</h2>
+        <p style="text-align: center;">¿Por qué es diferente a usar Cucumber tradicional con Selenium/RestAssured?</p>
+
+        <div class="comparison">
+            <div class="comp-box comp-old">
+                <h3>🛠️ El Método Tradicional (BDD)</h3>
+                <p>Escribes el escenario en inglés (Gherkin).</p>
+                <div style="font-size: 2rem; margin: 1rem 0;">⬇️ + ⚙️</div>
+                <p>Luego, debes escribir código "pegamento" (Java/Python/JS) para traducir cada frase en una acción real.</p>
+                <p><strong>Resultado:</strong> Mantenimiento doble y requiere conocimientos de programación.</p>
+            </div>
+
+            <div class="comp-box comp-new">
+                <h3>🥋 El Método Karate</h3>
+                <p>Escribes el escenario usando palabras clave de Karate que el framework ya entiende.</p>
+                <div style="font-size: 2rem; margin: 1rem 0;">⬇️ ✨</div>
+                <p>Karate ejecuta las acciones directamente. Sabe qué es HTTP, qué es JSON y cómo manejar un navegador.</p>
+                <p><strong>Resultado:</strong> Una sola capa de código. Rápido de escribir y fácil de leer.</p>
+            </div>
+        </div>
+
+
+        <h2 class="section-title">El Ecosistema Completo</h2>
+        <p style="text-align: center; margin-bottom: 2rem;">No es solo para APIs. Es una navaja suiza.</p>
+        <div class="features-grid">
+            <div class="feature-box">
+                <span class="feature-icon">🔌</span>
+                <h3>API Testing</h3>
+                <p>Su fortaleza principal. Soporte nativo para REST y SOAP. Manejo JSON/XML increíblemente fácil.</p>
+            </div>
+            <div class="feature-box" style="background: var(--accent-color); color: var(--primary-color);">
+                <span class="feature-icon">🖥️</span>
+                <h3 style="color: var(--primary-color);">UI Testing</h3>
+                <p>Automatiza navegadores (Chrome, Firefox) para pruebas web end-to-end. Una alternativa moderna a Selenium.</p>
+            </div>
+            <div class="feature-box">
+                <span class="feature-icon">🎭</span>
+                <h3>API Mocking</h3>
+                <p>Crea servidores falsos (mocks) en minutos para simular servicios externos durante el desarrollo.</p>
+            </div>
+            <div class="feature-box">
+                <span class="feature-icon">🚀</span>
+                <h3>Performance</h3>
+                <p>Integración con Gatling. Reutiliza tus pruebas funcionales de Karate para pruebas de carga.</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">La Sintaxis en Acción</h2>
+        <p>Mira lo simple que es validar una API REST (sin una sola línea de Java):</p>
+
+        <div class="code-section">
+            <span class="code-comment"># Archivo: users.feature</span><br>
+            <span class="code-keyword">Feature:</span> Validar API de Usuarios<br><br>
+            
+            <span class="code-keyword">Scenario:</span> Obtener detalles de un usuario exitosamente<br>
+            &nbsp;&nbsp;<span class="code-comment"># Definimos la URL base</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">Given</span> <span class="code-variable">url</span> <span class="code-string">'https://jsonplaceholder.typicode.com/users/1'</span><br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment"># Realizamos la petición HTTP GET</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">When</span> <span class="code-variable">method</span> <span class="code-variable">get</span><br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment"># Verificamos el código de estado</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">Then</span> <span class="code-variable">status</span> 200<br><br>
+            
+            &nbsp;&nbsp;<span class="code-comment"># ¡La magia! Aserción directa sobre el JSON de respuesta</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">And</span> <span class="code-variable">match</span> <span class="code-variable">response</span>.username == <span class="code-string">'Bret'</span><br>
+            &nbsp;&nbsp;<span class="code-keyword">And</span> <span class="code-variable">match</span> <span class="code-variable">response</span>.address.city == <span class="code-string">'Gwenborough'</span>
+        </div>
+
+        <h2 class="section-title">¿Por qué elegir Karate?</h2>
+        <div class="grid-2" style="margin-top: 2rem;">
+            <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+                <li style="margin-bottom: 1rem;">✅ <strong>Baja Curva de Aprendizaje:</strong> Si sabes JSON y HTTP básico, puedes empezar hoy.</li>
+                <li style="margin-bottom: 1rem;">✅ <strong>Todo en Uno:</strong> No necesitas gestionar 10 librerías diferentes (RestAssured + Hamcrest + Selenium + etc.).</li>
+                <li style="margin-bottom: 1rem;">✅ <strong>Pruebas Paralelas:</strong> Ejecución nativa en paralelo para resultados rápidos.</li>
+            </ul>
+            <ul style="list-style: none; padding: 0; font-size: 1.1rem;">
+                <li style="margin-bottom: 1rem;">✅ <strong>Aserciones Potentes:</strong> El comando `match` es extremadamente flexible para validar payloads JSON complejos.</li>
+                <li style="margin-bottom: 1rem;">✅ <strong>Reportes Nativos:</strong> Genera reportes HTML detallados automáticamente.</li>
+                <li style="margin-bottom: 1rem;">✅ <strong>Interoperabilidad Java/JS:</strong> Si realmente necesitas código complejo, puedes llamar a Java o JavaScript fácilmente.</li>
+            </ul>
+        </div>
+
+    </div>
+
+    <footer class="footer">
+        <h3>🥋 Aprende más</h3>
+        <p>Sitio Oficial y Documentación: <a href="https://github.com/karatelabs/karate" target="_blank">Karate Labs en GitHub</a></p>
+    </footer>
+
+</body>
+</html>
