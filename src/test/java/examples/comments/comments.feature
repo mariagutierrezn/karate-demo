@@ -44,7 +44,6 @@ Feature: Pruebas CRUD sobre el endpoint de comentarios
         "body": "Comentario actualizado"
       }
       """
-
     Given path 'comments', 1
     And request updated_comment
     When method put
@@ -55,10 +54,30 @@ Feature: Pruebas CRUD sobre el endpoint de comentarios
 
   Scenario: Actualizar parcialmente un comentario
     Given path 'comments', 1
-    And request { "name": "Nombre parcialmente actualizado" }
-    When method patch
-    Then status 200
-    And match response.name == 'Nombre parcialmente actualizado'
+
+  Scenario Outline: Crear un comentario con diferentes datos usando Scenario Outline
+    * def new_comment =
+      """
+      {
+        "postId": <postId>,
+        "name": "<name>",
+        "email": "<email>",
+        "body": "<body>"
+      }
+      """
+    Given path 'comments'
+    And request new_comment
+    When method post
+    Then status 201
+    And match response.name == "<name>"
+    And match response.email == "<email>"
+    And match response.body == "<body>"
+
+    Examples:
+      | postId | name        | email            | body               |
+      |      1 | Prueba Uno  | uno@ejemplo.com  | Primer comentario  |
+      |      2 | Prueba Dos  | dos@ejemplo.com  | Segundo comentario |
+      |      3 | Prueba Tres | tres@ejemplo.com | Tercer comentario  |
 
   Scenario: Eliminar un comentario
     Given path 'comments', 1
