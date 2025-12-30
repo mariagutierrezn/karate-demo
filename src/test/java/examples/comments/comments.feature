@@ -54,6 +54,10 @@ Feature: Pruebas CRUD sobre el endpoint de comentarios
 
   Scenario: Actualizar parcialmente un comentario
     Given path 'comments', 1
+    And request { "name": "Nombre parcialmente actualizado" }
+    When method patch
+    Then status 200
+    And match response.name == 'Nombre parcialmente actualizado'
 
   Scenario Outline: Crear un comentario con diferentes datos usando Scenario Outline
     * def new_comment =
